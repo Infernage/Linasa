@@ -23,7 +23,7 @@ public class PuntuationManager : MonoBehaviour {
         puntuation.text = "Puntuación: " + current;
 	}
 
-    public void forward(Collision collider)
+    public void forward(Collision2D collider)
     {
         int point = System.Convert.ToInt32(collider.gameObject.tag.Split(new char[] { ' ' }[0]));
         puntuationNumber += point;

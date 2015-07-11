@@ -148,8 +148,9 @@ public class CharacterScript : MonoBehaviour {
         
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("toma!!!");
         if (collision.gameObject.tag.Equals("Obstacle"))
         {
             health--;
