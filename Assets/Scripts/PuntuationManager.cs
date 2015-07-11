@@ -29,5 +29,6 @@ public class PuntuationManager : MonoBehaviour {
         int point = System.Convert.ToInt32(split[0]);
         puntuationNumber += point;
         Destroy(collider.gameObject);
+        GenItems.items--;
     }
 }

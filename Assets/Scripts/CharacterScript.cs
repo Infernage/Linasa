@@ -5,7 +5,6 @@ public class CharacterScript : MonoBehaviour {
     public float max = 5;
     public float force = 0.01F;
     public float accelerationV = 0, accelerationH = 0;
-    public float health = 3;
     public float oxygen = 600;
     public float distanceUp
     {
@@ -30,20 +29,18 @@ public class CharacterScript : MonoBehaviour {
 
     public ParticleSystem particles;
     public GameObject sprite;
-    public PuntuationManager puntuation;
-    public bool subLife = true;
 
 	// Use this for initialization
 	void Start () {
 	}
-
-    private void loadRanking()
-    {
-        Application.LoadLevel("ranking");
-    }
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.LoadLevel("menu");
+            return;
+        }
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         float target = 0;
@@ -117,7 +114,7 @@ public class CharacterScript : MonoBehaviour {
         }
         if (oxygen <= 0)
         {
-            loadRanking();
+            Application.LoadLevel("ranking");
         }
 
         if (accelerationH > 0)
@@ -150,41 +147,5 @@ public class CharacterScript : MonoBehaviour {
         
     }
 
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Obstacle")
-        {
-            if (!subLife) subLife = true;
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Obstacle")
-        {
-            if (subLife)
-            {
-                subLife = false;
-                health--;
-                if (health <= 0)
-                {
-                    loadRanking();
-                }
-            }
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag.Contains("Point"))
-        {
-            puntuation.forward(collision);
-        }
-        else if (collision.gameObject.tag == "Oxygen")
-        {
-            Destroy(collision.gameObject);
-            oxygen += 200;
-            if (oxygen > 600) oxygen = 600;
-        }
-    }
+    
 }

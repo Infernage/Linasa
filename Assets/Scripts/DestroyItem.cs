@@ -10,12 +10,13 @@ public class DestroyItem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        Debug.Log(transform.position.x + " " + transform.position.y);
 	}
 
     void OnTriggerEnter2D(Collider2D col)
     {
         Destroy(col.gameObject);
+        GenItems.items--;
         Debug.Log("Destroy trigger");
     }
 }
