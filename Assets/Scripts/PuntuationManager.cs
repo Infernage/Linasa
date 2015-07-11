@@ -25,6 +25,7 @@ public class PuntuationManager : MonoBehaviour {
 
     public void forward(Collision collider)
     {
-        // TODO
+        int point = System.Convert.ToInt32(collider.gameObject.tag.Split(new char[] { ' ' }[0]));
+        puntuationNumber += point;
     }
 }
