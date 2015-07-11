@@ -11,10 +11,7 @@ public class SaveRanking : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        GameObject canvas = GameObject.Find("CanvasTop10");
-        GameObject canvasPoints = GameObject.Find("Canvas");
-        points = canvasPoints.GetComponentInChildren<Text>();
-        InputName = canvas.GetComponentInChildren<InputField>();
+        
     }
 
     // Update is called once per frame
@@ -25,6 +22,10 @@ public class SaveRanking : MonoBehaviour
 
     public void SaveData()
     {
+        GameObject canvas = GameObject.Find("CanvasTop10");
+        GameObject canvasPoints = GameObject.Find("Canvas");
+        points = canvasPoints.GetComponentInChildren<Text>();
+        InputName = canvas.GetComponentInChildren<InputField>();
         string name = InputName.text;
         string[] split = points.text.Split(' ');
         if (name != null && name != "")

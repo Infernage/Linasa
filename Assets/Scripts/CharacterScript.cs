@@ -29,6 +29,7 @@ public class CharacterScript : MonoBehaviour {
     }
 
     public ParticleSystem particles;
+    public GameObject sprite;
 
 	// Use this for initialization
 	void Start () {
@@ -47,21 +48,29 @@ public class CharacterScript : MonoBehaviour {
         if (v == -1)
         {
             target = 180;
+            if (h == 1) target = 225;
+            else if (h == -1) target = 135;
             if (accelerationV > 0 - max) accelerationV -= force * (accelerationV > 0 ? 2 : 1);
         }
         if (v == 1)
         {
             target = 0;
+            if (h == 1) target = 315;
+            else if (h == -1) target = 45;
             if (accelerationV < max) accelerationV += force * (accelerationV < 0 ? 2 : 1);
         }
         if (h == -1)
         {
             target = 90;
+            if (v == 1) target = 45;
+            else if (v == -1) target = 135;
             if (accelerationH > 0 - max) accelerationH -= force * (accelerationH > 0 ? 2 : 1);
         }
         if (h == 1 && accelerationH < max)
         {
             target = 270;
+            if (v == 1) target = 315;
+            else if (v == -1) target = 225;
             if (accelerationH < max) accelerationH += force * (accelerationH < 0 ? 2 : 1);
         }
         if (v == 0 && accelerationV != 0)
@@ -74,34 +83,35 @@ public class CharacterScript : MonoBehaviour {
         }
         float hdistance = accelerationH * Time.deltaTime;
         float vdistance = accelerationV * Time.deltaTime;
-        transform.Translate(Vector3.forward * hdistance);
+        transform.Translate(Vector3.right * hdistance);
         transform.Translate(Vector3.up * vdistance);
-
-        /*Vector3 rotation = transform.rotation.eulerAngles;
-        rotation.z = rotation.z % 360; // No more than 360 degrees
-        float neededRotation = target - rotation.z;
-        if (Mathf.Abs(neededRotation) < 1) // The rotation must be the target one if is close enough
-        {
-            rotation.z = target;
-        }
-        else if (Mathf.Abs(neededRotation) >= 180)
-        {
-            neededRotation = (neededRotation < 0 ? 360 + neededRotation : -(360 - neededRotation));
-            rotation.z += neededRotation / Mathf.Abs(neededRotation);
-        } else{
-            rotation.z += neededRotation / Mathf.Abs(neededRotation);
-        }
-        transform.Rotate(rotation);*/
 
         if (v != 0 || h != 0)
         {
             oxygen -= force * 10;
-            particles.enableEmission = true;
+            particles.Play();
+
+            Vector3 rotation = sprite.transform.rotation.eulerAngles;
+            rotation.z = rotation.z % 360; // No more than 360 degrees
+            float neededRotation = target - rotation.z;
+            if (Mathf.Abs(neededRotation) < 1) // The rotation must be the target one if is close enough
+            {
+                neededRotation = 0;
+            }
+            else if (Mathf.Abs(neededRotation) >= 180)
+            {
+                neededRotation = (neededRotation < 0 ? 360 + neededRotation : -(360 - neededRotation)) * Time.deltaTime;
+            }
+            else
+            {
+                neededRotation *= Time.deltaTime;
+            }
+            sprite.transform.Rotate(Vector3.forward * neededRotation);
         }
         else
         {
             oxygen -= force;
-            particles.enableEmission = false;
+            particles.Stop();
         }
         if (oxygen <= 0)
         {
@@ -128,7 +138,9 @@ public class CharacterScript : MonoBehaviour {
 
     void LateUpdate()
     {
-        Camera.main.transform.LookAt(transform);
+        Camera cam = Camera.main;
+        Vector3 position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
+        cam.transform.position = Vector3.Lerp(cam.transform.position, position, 3 * Time.deltaTime);
     }
 
     void FixedUpdate()

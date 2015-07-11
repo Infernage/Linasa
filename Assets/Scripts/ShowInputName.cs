@@ -19,7 +19,7 @@ public class ShowInputName : MonoBehaviour
     {
     }
 
-    void ComprobarTop10()
+    public void ComprobarTop10()
     {
         string[] split = pointsText.text.Split(' ');
         float points = int.Parse(split[1]);
