@@ -16,11 +16,8 @@ public class Ranking : MonoBehaviour
 
     }
 
-    void OnMouseDown()
+    public void OnClick()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Application.LoadLevel("ranking");
-        }
+        GameObject.Find("PuntuacionesUI").SetActive(true);
     }
 }

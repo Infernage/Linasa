@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class CharacterScript : MonoBehaviour {
-    public float max = 5;
-    public float force = 0.01F;
+    public float max = 10;
+    public float force = 1;
     public float accelerationV = 0, accelerationH = 0;
     public float oxygen = 600;
     public float distanceUp
@@ -87,7 +87,7 @@ public class CharacterScript : MonoBehaviour {
 
         if (v != 0 || h != 0)
         {
-            oxygen -= force * 10;
+            oxygen -= 0.1F;
             particles.Play();
 
             Vector3 rotation = sprite.transform.rotation.eulerAngles;
@@ -109,7 +109,7 @@ public class CharacterScript : MonoBehaviour {
         }
         else
         {
-            oxygen -= force;
+            oxygen -= 0.01F;
             particles.Stop();
         }
         if (oxygen <= 0)

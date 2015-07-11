@@ -16,11 +16,8 @@ public class ControlMap : MonoBehaviour
 
     }
 
-    void OnMouseDown()
+    public void OnClick()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            contenedor.SetActive(true);
-        }
+        contenedor.SetActive(true);
     }
 }

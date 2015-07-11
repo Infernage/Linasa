@@ -16,11 +16,8 @@ public class LoadGame : MonoBehaviour
 
     }
 
-    void OnMouseDown()
+    public void OnClick()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Application.LoadLevel("game");
-        }
+        Application.LoadLevel("game");
     }
 }

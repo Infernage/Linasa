@@ -16,12 +16,9 @@ public class Close : MonoBehaviour
 
     }
 
-    void OnMouseDown()
+    public void OnClick()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Application.Quit();
-        }
+        Application.Quit();
     }
 
 

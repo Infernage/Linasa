@@ -16,11 +16,8 @@ public class Credits : MonoBehaviour
 
     }
 
-    void OnMouseDown()
+    public void OnClick()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Application.LoadLevel("credits");
-        }
+        Application.LoadLevel("credits");
     }
 }

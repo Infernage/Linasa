@@ -14,7 +14,7 @@ public class LoadRanking : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        texto = this.GetComponentInChildren<Text>();
+        texto = this.GetComponent<Text>();
 
         LoadData();
     }

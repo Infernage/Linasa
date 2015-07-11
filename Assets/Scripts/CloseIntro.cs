@@ -16,7 +16,7 @@ public class CloseIntro : MonoBehaviour
 
     }
 
-    void OnMouseDown()
+    public void OnClick()
     {
         this.gameObject.SetActive(false);
     }
