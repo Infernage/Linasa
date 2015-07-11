@@ -48,6 +48,7 @@ public class CharacterScript : MonoBehaviour
         AudioSource[] audios = this.gameObject.GetComponents<AudioSource>();
         foreach (AudioSource source in audios)
         {
+            Cursor.visible = false;
             if (source.clip.name == "Aire a presión")
             {
                 acelTop = source;
@@ -205,6 +206,7 @@ public class CharacterScript : MonoBehaviour
         }
         if (oxygen <= 0)
         {
+            Cursor.visible = true;
             Application.LoadLevel("ranking");
         }
 
