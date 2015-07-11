@@ -30,6 +30,8 @@ public class CharacterScript : MonoBehaviour {
 
     public ParticleSystem particles;
     public GameObject sprite;
+    public PuntuationManager puntuation;
+    public bool subLife = true;
 
 	// Use this for initialization
 	void Start () {
@@ -148,23 +150,39 @@ public class CharacterScript : MonoBehaviour {
         
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Obstacle"))
+        if (collision.gameObject.tag == "Obstacle")
         {
-            health--;
-            if (health <= 0)
+            if (!subLife) subLife = true;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            if (subLife)
             {
-                loadRanking();
+                subLife = false;
+                health--;
+                if (health <= 0)
+                {
+                    loadRanking();
+                }
             }
         }
-        else if (collision.gameObject.tag.Contains("Point"))
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Contains("Point"))
         {
-            PuntuationManager puntuation = GetComponent<PuntuationManager>();
             puntuation.forward(collision);
         }
-        else if (collision.gameObject.tag.Equals("Oxygen"))
+        else if (collision.gameObject.tag == "Oxygen")
         {
+            Destroy(collision.gameObject);
             oxygen += 200;
             if (oxygen > 600) oxygen = 600;
         }

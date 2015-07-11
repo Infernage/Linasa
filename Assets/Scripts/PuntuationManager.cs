@@ -14,8 +14,8 @@ public class PuntuationManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Text puntuation = GetComponent<Text>();
-        string str = puntuation.text;
-        int current = System.Convert.ToInt32(str.Split(new char[]{ ' ' })[1]);
+        string[] split = puntuation.text.Split(new char[] { ' ' });
+        int current = System.Convert.ToInt32(split[1]);
         if (current != puntuationNumber)
         {
             current = puntuationNumber;
@@ -23,9 +23,11 @@ public class PuntuationManager : MonoBehaviour {
         puntuation.text = "Puntuación: " + current;
 	}
 
-    public void forward(Collision collider)
+    public void forward(Collider2D collider)
     {
-        int point = System.Convert.ToInt32(collider.gameObject.tag.Split(new char[] { ' ' }[0]));
+        string[] split = collider.gameObject.tag.Split(new char[] { ' ' });
+        int point = System.Convert.ToInt32(split[0]);
         puntuationNumber += point;
+        Destroy(collider.gameObject);
     }
 }
