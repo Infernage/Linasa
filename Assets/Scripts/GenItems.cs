@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GenItems : MonoBehaviour
 {
-    public GameObject[] objs = new GameObject[2];
+    private GameObject[] objs = new GameObject[2];
     private int num = 0;
 
     // Use this for initialization
