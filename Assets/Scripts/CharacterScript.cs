@@ -7,14 +7,16 @@ public class CharacterScript : MonoBehaviour
     public float force = 0.01F;
     public float accelerationV = 0, accelerationH = 0;
     public float oxygen = 600;
-    public AudioClip acel;
-    public AudioClip acelRight;
-    public AudioClip acelLeft;
-    private bool acelerar = false;
+    private AudioSource acelTop;
+    private AudioSource acelBot;
+    private AudioSource acelRight;
+    private AudioSource acelLeft;
+    private bool acelerarArriba = false;
+    private bool acelerarAbajo = false;
     private bool acelerarDerecha = false;
     private bool acelerarIzq = false;
 
-
+    #region Propiedades
     public float distanceUp
     {
         set;
@@ -35,6 +37,7 @@ public class CharacterScript : MonoBehaviour
         set;
         get;
     }
+    #endregion Propiedades
 
     public ParticleSystem particles;
     public GameObject sprite;
@@ -42,6 +45,23 @@ public class CharacterScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        AudioSource[] audios = this.gameObject.GetComponents<AudioSource>();
+        foreach (AudioSource source in audios)
+        {
+            if (source.clip.name == "Aire a presión")
+            {
+                acelTop = source;
+                acelBot = source;
+            }
+            else if (source.clip.name == "Aire a presión derecha")
+            {
+                acelRight = source;
+            }
+            else if (source.clip.name == "Aire a presión izqu")
+            {
+                acelLeft = source;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -57,33 +77,49 @@ public class CharacterScript : MonoBehaviour
         float target = 0;
         if (v == -1)
         {
-            if (!acelerar)
+            if (!acelerarArriba)
             {
-                AudioSource.PlayClipAtPoint(acel, this.transform.position);
+                acelTop.Play();
             }
             target = 180;
             if (h == 1) target = 225;
             else if (h == -1) target = 135;
             if (accelerationV > 0 - max) accelerationV -= force * (accelerationV > 0 ? 2 : 1);
-            acelerar = true;
+            acelerarArriba = true;
+        }
+        else
+        {
+            if (acelerarArriba)
+            {
+                acelerarArriba = false;
+                acelTop.Pause();
+            }
         }
         if (v == 1)
         {
-            if (!acelerar)
+            if (!acelerarAbajo)
             {
-                AudioSource.PlayClipAtPoint(acel, this.transform.position);
+                acelBot.Play();
             }
             target = 0;
             if (h == 1) target = 315;
             else if (h == -1) target = 45;
             if (accelerationV < max) accelerationV += force * (accelerationV < 0 ? 2 : 1);
-            acelerar = true;
+            acelerarAbajo = true;
+        }
+        else
+        {
+            if (acelerarAbajo)
+            {
+                acelBot.Pause();
+                acelerarAbajo = false;
+            }
         }
         if (h == -1)
         {
             if (!acelerarDerecha)
             {
-                AudioSource.PlayClipAtPoint(acelRight, this.transform.position);
+                acelRight.Play();
             }
             target = 90;
             if (v == 1) target = 45;
@@ -91,17 +127,33 @@ public class CharacterScript : MonoBehaviour
             if (accelerationH > 0 - max) accelerationH -= force * (accelerationH > 0 ? 2 : 1);
             acelerarDerecha = true;
         }
+        else
+        {
+            if (acelerarDerecha)
+            {
+                acelerarDerecha = false;
+                acelRight.Pause();
+            }
+        }
         if (h == 1 && accelerationH < max)
         {
             if (!acelerarIzq)
             {
-                AudioSource.PlayClipAtPoint(acelLeft, this.transform.position);
+                acelLeft.Play();
             }
             target = 270;
             if (v == 1) target = 315;
             else if (v == -1) target = 225;
             if (accelerationH < max) accelerationH += force * (accelerationH < 0 ? 2 : 1);
             acelerarIzq = true;
+        }
+        else
+        {
+            if (acelerarIzq)
+            {
+                acelLeft.Pause();
+                acelerarIzq = false;
+            }
         }
         if (v == 0 && accelerationV != 0)
         {
@@ -140,6 +192,14 @@ public class CharacterScript : MonoBehaviour
         }
         else
         {
+            acelBot.Pause();
+            acelTop.Pause();
+            acelLeft.Pause();
+            acelRight.Pause();
+            acelerarIzq = false;
+            acelerarDerecha = false;
+            acelerarAbajo = false;
+            acelerarArriba = false;
             oxygen -= force;
             particles.Stop();
         }
