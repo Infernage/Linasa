@@ -28,7 +28,7 @@ public class LoadRanking : MonoBehaviour
         for (int i = 0; i < ranking.Length; i++)
         {
             string[] cut = ranking[i].Split('-');
-            texto.text += cut[0].ToString() + "" + cut[1].ToString() + "\n";
+            texto.text += cut[0].ToString() + "  " + cut[1].ToString() + "\n";
         }
     }
 }

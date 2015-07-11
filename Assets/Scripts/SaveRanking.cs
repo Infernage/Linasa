@@ -13,8 +13,8 @@ public class SaveRanking : MonoBehaviour
     {
         GameObject canvas = GameObject.Find("CanvasTop10");
         GameObject canvasPoints = GameObject.Find("Canvas");
-        points = canvasPoints.GetComponent<Text>();
-        InputName = canvas.GetComponent<InputField>();
+        points = canvasPoints.GetComponentInChildren<Text>();
+        InputName = canvas.GetComponentInChildren<InputField>();
     }
 
     // Update is called once per frame
@@ -23,22 +23,18 @@ public class SaveRanking : MonoBehaviour
     }
 
 
-   public void SaveData() {
+    public void SaveData()
+    {
         string name = InputName.text;
-
-        if (Input.GetMouseButtonDown(0))
+        string[] split = points.text.Split(' ');
+        if (name != null && name != "")
         {
-            Debug.Log("Click!");
-            if (name != null && name != "")
-            {
-                Debug.Log("Leer ranking");
-                string[] ranking = File.ReadAllLines("\\Ranking\\Ranking.txt");
-                string[] saveRanking = new string[10];
-                saveRanking = ranking;
-                saveRanking[10] = name + "-" + /*points.text*/10;
-                Array.Sort(saveRanking);
-                File.WriteAllLines("\\Ranking\\Ranking.txt", saveRanking);
-            }
+            string[] ranking = File.ReadAllLines(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Ranking" + Path.DirectorySeparatorChar + "Ranking.txt");
+            string[] saveRanking = new string[10];
+            saveRanking = ranking;
+            saveRanking[ranking.Length - 1] = name + "-" + split[1];
+            Array.Sort(saveRanking);
+            File.WriteAllLines(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Ranking" + Path.DirectorySeparatorChar + "Ranking.txt", saveRanking);
         }
     }
 }

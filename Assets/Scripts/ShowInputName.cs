@@ -5,37 +5,34 @@ using UnityEngine.UI;
 
 public class ShowInputName : MonoBehaviour
 {
-    private bool top10 = false;
-    private float points;
+    private Text pointsText;
 
     // Use this for initialization
     void Start()
     {
-        
+        GameObject canvas = GameObject.Find("Canvas");
+        pointsText = canvas.GetComponentInChildren<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (top10)
-        {
-            this.enabled = true;
-        }
     }
 
-    void ComprobarTop10(float points)
+    void ComprobarTop10()
     {
+        string[] split = pointsText.text.Split(' ');
+        float points = int.Parse(split[1]);
         //Get all lines in ranking
-        string[] lines = File.ReadAllLines("\\Ranking\\Ranking.txt");
+        string[] lines = File.ReadAllLines(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Ranking" + Path.DirectorySeparatorChar + "Ranking.txt");
 
         for (int i = 0; i < lines.Length; i++)
         {
             // Split the line by '-'
             string[] cut = lines[i].Split('-');
-            if (int.Parse(cut[1]) < points && !top10)
+            if (int.Parse(cut[1]) < points)
             {
-                top10 = true;
-                this.points = points;
+                this.enabled = true;
             }
         }
     }
