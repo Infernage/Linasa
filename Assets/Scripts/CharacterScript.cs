@@ -6,6 +6,16 @@ public class CharacterScript : MonoBehaviour {
     public float force = 1;
     public float accelerationV = 0, accelerationH = 0;
     public float oxygen = 600;
+    private AudioSource acelTop;
+    private AudioSource acelBot;
+    private AudioSource acelRight;
+    private AudioSource acelLeft;
+    private bool acelerarArriba = false;
+    private bool acelerarAbajo = false;
+    private bool acelerarDerecha = false;
+    private bool acelerarIzq = false;
+
+    #region Propiedades
     public float distanceUp
     {
         set;
@@ -26,16 +36,37 @@ public class CharacterScript : MonoBehaviour {
         set;
         get;
     }
+    #endregion Propiedades
 
     public ParticleSystem particles;
     public GameObject sprite;
 
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start()
+    {
+        AudioSource[] audios = this.gameObject.GetComponents<AudioSource>();
+        foreach (AudioSource source in audios)
+        {
+            Cursor.visible = false;
+            if (source.clip.name == "Aire a presión")
+            {
+                acelTop = source;
+                acelBot = source;
+            }
+            else if (source.clip.name == "Aire a presión derecha")
+            {
+                acelRight = source;
+            }
+            else if (source.clip.name == "Aire a presión izqu")
+            {
+                acelLeft = source;
+            }
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (Input.GetKey(KeyCode.Escape))
         {
             Application.LoadLevel("menu");
@@ -46,31 +77,83 @@ public class CharacterScript : MonoBehaviour {
         float target = 0;
         if (v == -1)
         {
+            if (!acelerarArriba)
+            {
+                acelTop.Play();
+            }
             target = 180;
             if (h == 1) target = 225;
             else if (h == -1) target = 135;
             if (accelerationV > 0 - max) accelerationV -= force * (accelerationV > 0 ? 2 : 1);
+            acelerarArriba = true;
+        }
+        else
+        {
+            if (acelerarArriba)
+            {
+                acelerarArriba = false;
+                acelTop.Pause();
+            }
         }
         if (v == 1)
         {
+            if (!acelerarAbajo)
+            {
+                acelBot.Play();
+            }
             target = 0;
             if (h == 1) target = 315;
             else if (h == -1) target = 45;
             if (accelerationV < max) accelerationV += force * (accelerationV < 0 ? 2 : 1);
+            acelerarAbajo = true;
+        }
+        else
+        {
+            if (acelerarAbajo)
+            {
+                acelBot.Pause();
+                acelerarAbajo = false;
+            }
         }
         if (h == -1)
         {
+            if (!acelerarDerecha)
+            {
+                acelRight.Play();
+            }
             target = 90;
             if (v == 1) target = 45;
             else if (v == -1) target = 135;
             if (accelerationH > 0 - max) accelerationH -= force * (accelerationH > 0 ? 2 : 1);
+            acelerarDerecha = true;
+        }
+        else
+        {
+            if (acelerarDerecha)
+            {
+                acelerarDerecha = false;
+                acelRight.Pause();
+            }
         }
         if (h == 1 && accelerationH < max)
         {
+            if (!acelerarIzq)
+            {
+                acelLeft.Play();
+            }
             target = 270;
             if (v == 1) target = 315;
             else if (v == -1) target = 225;
             if (accelerationH < max) accelerationH += force * (accelerationH < 0 ? 2 : 1);
+            acelerarIzq = true;
+        }
+        else
+        {
+            if (acelerarIzq)
+            {
+                acelLeft.Pause();
+                acelerarIzq = false;
+            }
         }
         if (v == 0 && accelerationV != 0)
         {
@@ -110,10 +193,19 @@ public class CharacterScript : MonoBehaviour {
         else
         {
             oxygen -= 0.01F;
+            acelBot.Pause();
+            acelTop.Pause();
+            acelLeft.Pause();
+            acelRight.Pause();
+            acelerarIzq = false;
+            acelerarDerecha = false;
+            acelerarAbajo = false;
+            acelerarArriba = false;
             particles.Stop();
         }
         if (oxygen <= 0)
         {
+            Cursor.visible = true;
             Application.LoadLevel("ranking");
         }
 
@@ -133,7 +225,7 @@ public class CharacterScript : MonoBehaviour {
         {
             distanceDown += Mathf.Abs(accelerationV);
         }
-	}
+    }
 
     void LateUpdate()
     {
@@ -144,8 +236,8 @@ public class CharacterScript : MonoBehaviour {
 
     void FixedUpdate()
     {
-        
+
     }
 
-    
+
 }

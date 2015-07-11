@@ -19,4 +19,11 @@ public class DestroyItem : MonoBehaviour {
         GenItems.items--;
         Debug.Log("Destroy trigger");
     }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Destroy(col.gameObject);
+        GenItems.items--;
+        Debug.Log("Destroy trigger");
+    }
 }
