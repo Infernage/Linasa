@@ -41,5 +41,8 @@ public class GenItems : MonoBehaviour
     }
 
 
-
+    void OnDestroy()
+    {
+        items = 0;
+    }
 }
