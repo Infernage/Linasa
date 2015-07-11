@@ -9,7 +9,8 @@ public class GenItems : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        objs[0] = (GameObject)Resources.Load("sfdfsdfsd");
+        objs[0] = Resources.Load("Ovni", typeof(GameObject)) as GameObject;
+        objs[1] = Resources.Load("Satelite", typeof(GameObject)) as GameObject;
     }
 
     // Update is called once per frame

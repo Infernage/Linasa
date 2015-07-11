@@ -28,6 +28,8 @@ public class CharacterScript : MonoBehaviour {
         get;
     }
 
+    public ParticleSystem particles;
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -72,10 +74,10 @@ public class CharacterScript : MonoBehaviour {
         }
         float hdistance = accelerationH * Time.deltaTime;
         float vdistance = accelerationV * Time.deltaTime;
-        transform.Translate(Vector3.right * hdistance);
+        transform.Translate(Vector3.forward * hdistance);
         transform.Translate(Vector3.up * vdistance);
 
-        Vector3 rotation = transform.rotation.eulerAngles;
+        /*Vector3 rotation = transform.rotation.eulerAngles;
         rotation.z = rotation.z % 360; // No more than 360 degrees
         float neededRotation = target - rotation.z;
         if (Mathf.Abs(neededRotation) < 1) // The rotation must be the target one if is close enough
@@ -89,15 +91,17 @@ public class CharacterScript : MonoBehaviour {
         } else{
             rotation.z += neededRotation / Mathf.Abs(neededRotation);
         }
-        transform.Rotate(rotation);
+        transform.Rotate(rotation);*/
 
         if (v != 0 || h != 0)
         {
             oxygen -= force * 10;
+            particles.enableEmission = true;
         }
         else
         {
             oxygen -= force;
+            particles.enableEmission = false;
         }
         if (oxygen <= 0)
         {
@@ -121,6 +125,11 @@ public class CharacterScript : MonoBehaviour {
             distanceDown += Mathf.Abs(accelerationV);
         }
 	}
+
+    void LateUpdate()
+    {
+        Camera.main.transform.LookAt(transform);
+    }
 
     void FixedUpdate()
     {
