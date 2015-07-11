@@ -137,7 +137,7 @@ public class CharacterScript : MonoBehaviour {
                 loadRanking();
             }
         }
-        else if (collision.gameObject.tag.Equals("Point"))
+        else if (collision.gameObject.tag.Contains("Point"))
         {
             PuntuationManager puntuation = GetComponent<PuntuationManager>();
             puntuation.forward(collision);
