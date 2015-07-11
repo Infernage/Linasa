@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterScript : MonoBehaviour {
+public class CharacterScript : MonoBehaviour
+{
     public float max = 5;
     public float force = 0.01F;
     public float accelerationV = 0, accelerationH = 0;
     public float oxygen = 600;
+    public AudioClip acel;
+    public AudioClip acelRight;
+    public AudioClip acelLeft;
+    private bool acelerar = false;
+    private bool acelerarDerecha = false;
+    private bool acelerarIzq = false;
+
+
     public float distanceUp
     {
         set;
@@ -30,12 +39,14 @@ public class CharacterScript : MonoBehaviour {
     public ParticleSystem particles;
     public GameObject sprite;
 
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start()
+    {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (Input.GetKey(KeyCode.Escape))
         {
             Application.LoadLevel("menu");
@@ -46,31 +57,51 @@ public class CharacterScript : MonoBehaviour {
         float target = 0;
         if (v == -1)
         {
+            if (!acelerar)
+            {
+                AudioSource.PlayClipAtPoint(acel, this.transform.position);
+            }
             target = 180;
             if (h == 1) target = 225;
             else if (h == -1) target = 135;
             if (accelerationV > 0 - max) accelerationV -= force * (accelerationV > 0 ? 2 : 1);
+            acelerar = true;
         }
         if (v == 1)
         {
+            if (!acelerar)
+            {
+                AudioSource.PlayClipAtPoint(acel, this.transform.position);
+            }
             target = 0;
             if (h == 1) target = 315;
             else if (h == -1) target = 45;
             if (accelerationV < max) accelerationV += force * (accelerationV < 0 ? 2 : 1);
+            acelerar = true;
         }
         if (h == -1)
         {
+            if (!acelerarDerecha)
+            {
+                AudioSource.PlayClipAtPoint(acelRight, this.transform.position);
+            }
             target = 90;
             if (v == 1) target = 45;
             else if (v == -1) target = 135;
             if (accelerationH > 0 - max) accelerationH -= force * (accelerationH > 0 ? 2 : 1);
+            acelerarDerecha = true;
         }
         if (h == 1 && accelerationH < max)
         {
+            if (!acelerarIzq)
+            {
+                AudioSource.PlayClipAtPoint(acelLeft, this.transform.position);
+            }
             target = 270;
             if (v == 1) target = 315;
             else if (v == -1) target = 225;
             if (accelerationH < max) accelerationH += force * (accelerationH < 0 ? 2 : 1);
+            acelerarIzq = true;
         }
         if (v == 0 && accelerationV != 0)
         {
@@ -133,7 +164,7 @@ public class CharacterScript : MonoBehaviour {
         {
             distanceDown += Mathf.Abs(accelerationV);
         }
-	}
+    }
 
     void LateUpdate()
     {
@@ -144,8 +175,8 @@ public class CharacterScript : MonoBehaviour {
 
     void FixedUpdate()
     {
-        
+
     }
 
-    
+
 }
