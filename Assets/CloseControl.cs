@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ControlMap : MonoBehaviour
+public class CloseControl : MonoBehaviour
 {
-
     public GameObject contenedor;
     // Use this for initialization
     void Start()
@@ -20,7 +19,7 @@ public class ControlMap : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            contenedor.SetActive(true);
+            contenedor.SetActive(false);
         }
     }
 }
