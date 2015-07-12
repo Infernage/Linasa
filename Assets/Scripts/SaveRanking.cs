@@ -11,7 +11,7 @@ public class SaveRanking : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -24,17 +24,18 @@ public class SaveRanking : MonoBehaviour
     {
         GameObject canvas = GameObject.Find("Canvas");
         points = canvas.GetComponentInChildren<Text>();
+        Debug.Log(points.text);
         InputName = canvas.GetComponentInChildren<InputField>();
         string name = InputName.text;
         string[] split = points.text.Split(' ');
         if (name != null && name != "")
         {
             string[] ranking = File.ReadAllLines(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Ranking" + Path.DirectorySeparatorChar + "Ranking.txt");
-            string[] saveRanking = new string[10];
-            saveRanking = ranking;
-            saveRanking[ranking.Length - 1] = name + "-" + split[1];
-            Array.Sort(saveRanking);
-            File.WriteAllLines(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Ranking" + Path.DirectorySeparatorChar + "Ranking.txt", saveRanking);
+            ArrayList saveRanking = new ArrayList();
+            saveRanking.AddRange(ranking);
+            saveRanking.Add(name + "-" + split[1]);
+            string[] array = (string[])saveRanking.ToArray(typeof(string));
+            File.WriteAllLines(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Ranking" + Path.DirectorySeparatorChar + "Ranking.txt", array);
         }
         Application.LoadLevel("menu");
     }

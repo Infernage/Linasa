@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterScript : MonoBehaviour {
+public class CharacterScript : MonoBehaviour
+{
     public float max = 10;
     public float force = 1;
     public float accelerationV = 0, accelerationH = 0;
@@ -134,34 +135,14 @@ public class CharacterScript : MonoBehaviour {
         }
         if (h == -1)
         {
-            if (!acelerarDerecha)
+            if (!acelerarIzq)
             {
-                acelRight.Play();
+                acelLeft.Play();
             }
             target = 90;
             if (v == 1) target = 45;
             else if (v == -1) target = 135;
             if (accelerationH > 0 - max) accelerationH -= force * (accelerationH > 0 ? 2 : 1);
-            acelerarDerecha = true;
-        }
-        else
-        {
-            if (acelerarDerecha)
-            {
-                acelerarDerecha = false;
-                acelRight.Pause();
-            }
-        }
-        if (h == 1)
-        {
-            if (!acelerarIzq)
-            {
-                acelLeft.Play();
-            }
-            target = 270;
-            if (v == 1) target = 315;
-            else if (v == -1) target = 225;
-            if (accelerationH < max) accelerationH += force * (accelerationH < 0 ? 2 : 1);
             acelerarIzq = true;
         }
         else
@@ -170,6 +151,26 @@ public class CharacterScript : MonoBehaviour {
             {
                 acelLeft.Pause();
                 acelerarIzq = false;
+            }
+        }
+        if (h == 1)
+        {
+            if (!acelerarDerecha)
+            {
+                acelRight.Play();
+            }
+            target = 270;
+            if (v == 1) target = 315;
+            else if (v == -1) target = 225;
+            if (accelerationH < max) accelerationH += force * (accelerationH < 0 ? 2 : 1);
+            acelerarDerecha = true;
+        }
+        else
+        {
+            if (acelerarDerecha)
+            {
+                acelerarDerecha = false;
+                acelRight.Pause();
             }
         }
         if (v == 0 && accelerationV != 0)
