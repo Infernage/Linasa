@@ -14,6 +14,11 @@ public class ColliderScript : MonoBehaviour
     public AudioClip[] audiosAlien;
     public AudioClip ouch;
     public AudioClip asteroidSound;
+    public AudioClip ñam;
+    public AudioClip hueso;
+    public AudioClip eructo;
+    public AudioClip bolsa;
+    public AudioClip barril;
 
     // Use this for initialization
     void Start()
@@ -90,7 +95,30 @@ public class ColliderScript : MonoBehaviour
         if (collision.gameObject.tag.Contains("Point"))
         {
             puntuation.forward(collision);
-            AudioSource.PlayClipAtPoint(pointUp, this.transform.position);
+            //AudioSource.PlayClipAtPoint(pointUp, this.transform.position);
+
+            if (collision.gameObject.name == "pescado(Clone)" || collision.gameObject.name == "Manzana(Clone)")
+            {
+                AudioSource.PlayClipAtPoint(ñam, this.transform.position);
+            }
+            else if (collision.gameObject.name == "hueso(Clone)")
+            {
+                AudioSource.PlayClipAtPoint(hueso, this.transform.position);
+            }
+            else if (collision.gameObject.name == "Cola(Clone)")
+            {
+                AudioSource.PlayClipAtPoint(eructo, this.transform.position);
+            }
+            else if (collision.gameObject.name == "BolsaBasura(Clone)")
+            {
+                AudioSource.PlayClipAtPoint(bolsa, this.transform.position);
+                Debug.Log("basurita");
+            }
+            else if (collision.gameObject.name == "Barril(Clone)")
+            {
+                AudioSource.PlayClipAtPoint(barril, this.transform.position);
+                Debug.Log("barrilete");
+            }
         }
         else if (collision.gameObject.tag == "Oxygen")
         {
