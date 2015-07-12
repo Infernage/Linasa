@@ -14,6 +14,7 @@ public class ColliderScript : MonoBehaviour
     public AudioClip HitSat;
     public AudioClip[] audiosAlien;
     public AudioClip ouch;
+    public AudioClip asteroidSound;
     public GameObject submitRanking;
 
 
@@ -53,6 +54,10 @@ public class ColliderScript : MonoBehaviour
                 AudioSource.PlayClipAtPoint(clip, this.transform.position);
                 Bocadillo obj = collision.gameObject.GetComponent<Bocadillo>();
                 obj.activar();
+            }
+            else if (collision.gameObject.name == "Asteroide(Clone)")
+            {
+                AudioSource.PlayClipAtPoint(asteroidSound, this.transform.position);
             }
             if (subLife)
             {
