@@ -247,6 +247,10 @@ public class CharacterScript : MonoBehaviour
         }
         if (oxygen <= 0)
         {
+            acelBot.Pause();
+            acelTop.Pause();
+            acelLeft.Pause();
+            acelRight.Pause();
             GenItems.generate = false;
             Cursor.visible = true;
             Destroy(GameObject.Find("Objects"));
