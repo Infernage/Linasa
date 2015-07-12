@@ -7,7 +7,6 @@ public class ColliderScript : MonoBehaviour
 {
     public CharacterScript character;
     public bool subLife = true;
-    public float health = 3;
     public PuntuationManager puntuation;
     public AudioClip pointUp;
     public AudioClip oxygen;
@@ -57,8 +56,17 @@ public class ColliderScript : MonoBehaviour
             if (subLife)
             {
                 subLife = false;
-                health--;
-                if (health <= 0)
+                character.health--;
+                character.oxygen -= (character.oxygen % 200);
+                if (character.health == 2)
+                {
+                    character.oxybottle3.gameObject.SetActive(false);
+                }
+                else if (character.health == 1)
+                {
+                    character.oxybottle2.gameObject.SetActive(false);
+                }
+                if (character.health <= 0)
                 {
                     GenItems.generate = false;
                     Cursor.visible = true;
@@ -86,7 +94,19 @@ public class ColliderScript : MonoBehaviour
             AudioSource.PlayClipAtPoint(oxygen, this.transform.position);
             GenItems.items--;
             character.oxygen += 200;
-            if (character.oxygen > 600) character.oxygen = 600;
+            character.health++;
+            if (character.health == 2)
+            {
+                character.oxybottle1.sprite = character.bottles[9];
+                character.oxybottle2.gameObject.SetActive(true);
+            }
+            else if (character.health == 3)
+            {
+                character.oxybottle2.sprite = character.bottles[9];
+                character.oxybottle3.gameObject.SetActive(true);
+            }
+            if (character.health > 3) character.health = 3;
+            if (character.oxygen > 200 * character.health) character.oxygen = 200 * character.health;
         }
     }
 }

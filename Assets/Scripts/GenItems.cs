@@ -12,6 +12,7 @@ public class GenItems : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        generate = true;
         objs[0] = Resources.Load("Ovni", typeof(GameObject)) as GameObject;
         objs[1] = Resources.Load("Satelite", typeof(GameObject)) as GameObject;
         objs[2] = Resources.Load("Asteroide", typeof(GameObject)) as GameObject;
@@ -19,11 +20,6 @@ public class GenItems : MonoBehaviour
         objs[4] = Resources.Load("BolsaBasura", typeof(GameObject)) as GameObject;
         objs[5] = Resources.Load("Bombona", typeof(GameObject)) as GameObject;
         objs[6] = Resources.Load("Meteoro", typeof(GameObject)) as GameObject;
-        FirstGen();
-    }
-    void FirstGen()
-    {
-
     }
 
     // Update is called once per frame
@@ -45,7 +41,6 @@ public class GenItems : MonoBehaviour
             items++;
         }
     }
-
 
     void OnDestroy()
     {

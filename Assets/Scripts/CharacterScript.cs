@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class CharacterScript : MonoBehaviour
 {
-    public float max = 10;
-    public float force = 1;
+    public float max;
+    public float force;
     public float accelerationV = 0, accelerationH = 0;
     public float oxygen = 600;
+    public float health = 3;
     private AudioSource acelTop;
     private AudioSource acelBot;
     private AudioSource acelRight;
@@ -15,6 +17,7 @@ public class CharacterScript : MonoBehaviour
     private bool acelerarAbajo = false;
     private bool acelerarDerecha = false;
     private bool acelerarIzq = false;
+    private int bottle = 200;
 
     #region Propiedades
     public float distanceUp
@@ -46,6 +49,10 @@ public class CharacterScript : MonoBehaviour
 
     public ParticleSystem particles;
     public GameObject sprite;
+    public Image oxybottle1;
+    public Image oxybottle2;
+    public Image oxybottle3;
+    public Sprite[] bottles = new Sprite[10];
 
     // Use this for initialization
     void Start()
@@ -69,6 +76,18 @@ public class CharacterScript : MonoBehaviour
                 acelLeft = source;
             }
         }
+        max = 5;
+        force = 0.1F;
+        bottles[0] = Resources.Load("bombona 10%", typeof(Sprite)) as Sprite;
+        bottles[1] = Resources.Load("bombona 20%", typeof(Sprite)) as Sprite;
+        bottles[2] = Resources.Load("bombona 30%", typeof(Sprite)) as Sprite;
+        bottles[3] = Resources.Load("bombona 40%", typeof(Sprite)) as Sprite;
+        bottles[4] = Resources.Load("bombona 50%", typeof(Sprite)) as Sprite;
+        bottles[5] = Resources.Load("bombona 60%", typeof(Sprite)) as Sprite;
+        bottles[6] = Resources.Load("bombona 70%", typeof(Sprite)) as Sprite;
+        bottles[7] = Resources.Load("bombona 80%", typeof(Sprite)) as Sprite;
+        bottles[8] = Resources.Load("bombona 90%", typeof(Sprite)) as Sprite;
+        bottles[9] = Resources.Load("bombona Llena", typeof(Sprite)) as Sprite;
     }
 
     // Update is called once per frame
@@ -243,6 +262,25 @@ public class CharacterScript : MonoBehaviour
         else
         {
             distanceDown += Mathf.Abs(accelerationV);
+        }
+
+        // Update life
+        int currentBottles = (int) oxygen / bottle;
+        float bottleOxygen = oxygen % bottle;
+        int index = (int) bottleOxygen / 20;
+        Debug.Log(index);
+        Sprite currentSprite = bottles[index];
+        if (currentBottles == 2)
+        {
+            oxybottle3.sprite = currentSprite;
+        }
+        else if (currentBottles == 1)
+        {
+            oxybottle2.sprite = currentSprite;
+        }
+        else if (currentBottles == 0)
+        {
+            oxybottle1.sprite = currentSprite;
         }
     }
 
