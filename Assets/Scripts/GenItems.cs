@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GenItems : MonoBehaviour
 {
-    private GameObject[] objs = new GameObject[7];
+    private GameObject[] objs = new GameObject[11];
     private int num = 0;
     public static readonly int maxItems = 20;
     public static int items = 0;
@@ -20,6 +20,10 @@ public class GenItems : MonoBehaviour
         objs[4] = Resources.Load("BolsaBasura", typeof(GameObject)) as GameObject;
         objs[5] = Resources.Load("Bombona", typeof(GameObject)) as GameObject;
         objs[6] = Resources.Load("Meteoro", typeof(GameObject)) as GameObject;
+        objs[7] = Resources.Load("pescado", typeof(GameObject)) as GameObject;
+        objs[8] = Resources.Load("hueso", typeof(GameObject)) as GameObject;
+        objs[9] = Resources.Load("Manzana", typeof(GameObject)) as GameObject;
+        objs[10] = Resources.Load("Cola", typeof(GameObject)) as GameObject;
     }
 
     // Update is called once per frame
