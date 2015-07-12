@@ -4,23 +4,15 @@ using UnityEngine.UI;
 
 public class PuntuationManager : MonoBehaviour {
     public int puntuationNumber = 0;
-
+    private Text puntuation;
 
 	// Use this for initialization
 	void Start () {
-	
+        puntuation = GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Text puntuation = GetComponent<Text>();
-        string[] split = puntuation.text.Split(new char[] { ' ' });
-        int current = System.Convert.ToInt32(split[1]);
-        if (current != puntuationNumber)
-        {
-            current = puntuationNumber;
-        }
-        puntuation.text = "Puntuación: " + current;
 	}
 
     public void forward(Collider2D collider)
@@ -28,6 +20,7 @@ public class PuntuationManager : MonoBehaviour {
         string[] split = collider.gameObject.tag.Split(new char[] { ' ' });
         int point = System.Convert.ToInt32(split[0]);
         puntuationNumber += point;
+        puntuation.text = "Puntuación: " + puntuationNumber;
         Destroy(collider.gameObject);
         GenItems.items--;
     }

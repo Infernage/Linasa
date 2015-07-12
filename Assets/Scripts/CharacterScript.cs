@@ -18,7 +18,7 @@ public class CharacterScript : MonoBehaviour
     private bool acelerarAbajo = false;
     private bool acelerarDerecha = false;
     private bool acelerarIzq = false;
-    private int bottle = 200;
+    public int bottle = 200;
 
     #region Propiedades
     public float distanceUp
@@ -98,7 +98,7 @@ public class CharacterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Escape) && !finishInput)
         {
             Cursor.visible = true;
             menu.SetActive(true);
@@ -160,34 +160,14 @@ public class CharacterScript : MonoBehaviour
         }
         if (h == -1)
         {
-            if (!acelerarIzq)
+            if (!acelerarDerecha)
             {
-                acelLeft.Play();
+                acelRight.Play();
             }
             target = 90;
             if (v == 1) target = 45;
             else if (v == -1) target = 135;
             if (accelerationH > 0 - max) accelerationH -= force * (accelerationH > 0 ? 2 : 1);
-            acelerarIzq = true;
-        }
-        else
-        {
-            if (acelerarIzq)
-            {
-                acelLeft.Pause();
-                acelerarIzq = false;
-            }
-        }
-        if (h == 1)
-        {
-            if (!acelerarDerecha)
-            {
-                acelRight.Play();
-            }
-            target = 270;
-            if (v == 1) target = 315;
-            else if (v == -1) target = 225;
-            if (accelerationH < max) accelerationH += force * (accelerationH < 0 ? 2 : 1);
             acelerarDerecha = true;
         }
         else
@@ -196,6 +176,26 @@ public class CharacterScript : MonoBehaviour
             {
                 acelerarDerecha = false;
                 acelRight.Pause();
+            }
+        }
+        if (h == 1)
+        {
+            if (!acelerarIzq)
+            {
+                acelLeft.Play();
+            }
+            target = 270;
+            if (v == 1) target = 315;
+            else if (v == -1) target = 225;
+            if (accelerationH < max) accelerationH += force * (accelerationH < 0 ? 2 : 1);
+            acelerarIzq = true;
+        }
+        else
+        {
+            if (acelerarIzq)
+            {
+                acelLeft.Pause();
+                acelerarIzq = false;
             }
         }
         if (v == 0 && accelerationV != 0)
@@ -281,9 +281,9 @@ public class CharacterScript : MonoBehaviour
         }
 
         // Update life
-        int currentBottles = (int) oxygen / bottle;
+        int currentBottles = (int)oxygen / bottle;
         float bottleOxygen = oxygen % bottle;
-        int index = (int) bottleOxygen / 20;
+        int index = (int)bottleOxygen / 20;
         Sprite currentSprite = bottles[index];
         if (currentBottles == 2)
         {

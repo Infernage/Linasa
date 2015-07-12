@@ -67,7 +67,8 @@ public class ColliderScript : MonoBehaviour
             {
                 subLife = false;
                 character.health--;
-                character.oxygen -= (character.oxygen % 200);
+                character.oxygen -= ((character.oxygen / character.bottle) < character.health ? 0 
+                    : (character.oxygen % character.bottle));
                 if (character.health == 2)
                 {
                     character.oxybottle3.gameObject.SetActive(false);

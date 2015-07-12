@@ -5,6 +5,7 @@ public class GenItems : MonoBehaviour
 {
     private GameObject[] objs = new GameObject[11];
     private int num = 0;
+    public PuntuationManager puntuation;
     public static readonly int maxItems = 20;
     public static int items = 0;
     public static bool generate = true;
@@ -35,6 +36,12 @@ public class GenItems : MonoBehaviour
     void GenItem()
     {
         num = Random.Range(0, objs.Length);
+        if (num == 5)
+        {
+            int percentage = puntuation.puntuationNumber/ 20;
+            if (percentage >= 80) percentage = 80;
+            if (Random.Range(0, 100) < percentage) num = 6;
+        }
         float x = Random.Range(0, 2) + transform.position.x;
         float y = Random.Range(0, 2) + transform.position.y;
         Vector3 pos = new Vector3(x, y, transform.position.z);
