@@ -152,7 +152,7 @@ public class CharacterScript : MonoBehaviour {
                 acelRight.Pause();
             }
         }
-        if (h == 1 && accelerationH < max)
+        if (h == 1)
         {
             if (!acelerarIzq)
             {
@@ -184,6 +184,7 @@ public class CharacterScript : MonoBehaviour {
         float vdistance = accelerationV * Time.deltaTime;
         transform.Translate(Vector3.right * hdistance);
         transform.Translate(Vector3.up * vdistance);
+        //sprite.transform.position = transform.position;
 
         if (v != 0 || h != 0)
         {
@@ -247,7 +248,7 @@ public class CharacterScript : MonoBehaviour {
     void LateUpdate()
     {
         Camera cam = Camera.main;
-        Vector3 position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
+        Vector3 position = new Vector3(sprite.transform.position.x, sprite.transform.position.y, cam.transform.position.z);
         cam.transform.position = Vector3.Lerp(cam.transform.position, position, 3 * Time.deltaTime);
     }
 

@@ -7,6 +7,7 @@ public class GenItems : MonoBehaviour
     private int num = 0;
     public static readonly int maxItems = 20;
     public static int items = 0;
+    public static bool generate = true;
 
     // Use this for initialization
     void Start()
@@ -28,7 +29,7 @@ public class GenItems : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (items < maxItems) GenItem();
+        if (items < maxItems && generate) GenItem();
     }
 
     void GenItem()
@@ -36,9 +37,13 @@ public class GenItems : MonoBehaviour
         num = Random.Range(0, objs.Length);
         float x = Random.Range(0, 2) + transform.position.x;
         float y = Random.Range(0, 2) + transform.position.y;
-        GameObject item = Instantiate(objs[num], new Vector3(x, y, transform.position.z), Quaternion.identity) as GameObject;
-        item.transform.parent = GameObject.Find("Objects").transform;
-        items++;
+        Vector3 pos = new Vector3(x, y, transform.position.z);
+        if (Physics2D.OverlapCircleAll(new Vector2(x, y), 5).Length == 0)
+        {
+            GameObject item = Instantiate(objs[num], pos, Quaternion.identity) as GameObject;
+            item.transform.parent = GameObject.Find("Objects").transform;
+            items++;
+        }
     }
 
 

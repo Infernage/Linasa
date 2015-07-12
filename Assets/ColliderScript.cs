@@ -60,6 +60,7 @@ public class ColliderScript : MonoBehaviour
                 health--;
                 if (health <= 0)
                 {
+                    GenItems.generate = false;
                     Cursor.visible = true;
                     Destroy(GameObject.Find("Objects"));
                     character.finishInput = true;
