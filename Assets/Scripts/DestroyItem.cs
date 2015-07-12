@@ -17,7 +17,7 @@ public class DestroyItem : MonoBehaviour {
     {
         Destroy(col.gameObject);
         GenItems.items--;
-        Debug.Log("Destroy trigger");
+        //Debug.Log("Destroy trigger");
     }
 
     void OnCollisionEnter2D(Collision2D col)

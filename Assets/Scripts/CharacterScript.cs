@@ -76,7 +76,7 @@ public class CharacterScript : MonoBehaviour
                 acelLeft = source;
             }
         }
-        max = 5;
+        max = 7;
         force = 0.1F;
         bottles[0] = Resources.Load("bombona 10%", typeof(Sprite)) as Sprite;
         bottles[1] = Resources.Load("bombona 20%", typeof(Sprite)) as Sprite;
@@ -268,7 +268,6 @@ public class CharacterScript : MonoBehaviour
         int currentBottles = (int) oxygen / bottle;
         float bottleOxygen = oxygen % bottle;
         int index = (int) bottleOxygen / 20;
-        Debug.Log(index);
         Sprite currentSprite = bottles[index];
         if (currentBottles == 2)
         {
