@@ -91,7 +91,7 @@ public class CharacterScript : MonoBehaviour
         bottles[6] = Resources.Load("bombona 70%", typeof(Sprite)) as Sprite;
         bottles[7] = Resources.Load("bombona 80%", typeof(Sprite)) as Sprite;
         bottles[8] = Resources.Load("bombona 90%", typeof(Sprite)) as Sprite;
-        bottles[9] = Resources.Load("bombona Llena", typeof(Sprite)) as Sprite;
+        bottles[9] = Resources.Load("Bombona", typeof(Sprite)) as Sprite;
     }
 
     // Update is called once per frame

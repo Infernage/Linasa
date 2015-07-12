@@ -24,7 +24,6 @@ public class SaveRanking : MonoBehaviour
     {
         GameObject canvas = GameObject.Find("Canvas");
         points = canvas.GetComponentInChildren<Text>();
-        Debug.Log(points.text);
         InputName = canvas.GetComponentInChildren<InputField>();
         string name = InputName.text;
         string[] split = points.text.Split(' ');
