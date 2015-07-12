@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -53,6 +54,9 @@ public class CharacterScript : MonoBehaviour
     public Image oxybottle2;
     public Image oxybottle3;
     public Sprite[] bottles = new Sprite[10];
+    public GameObject submitRanking;
+    public AudioSource theme;
+    public AudioSource gameover;
 
     // Use this for initialization
     void Start()
@@ -202,9 +206,9 @@ public class CharacterScript : MonoBehaviour
         }
         float hdistance = accelerationH * Time.deltaTime;
         float vdistance = accelerationV * Time.deltaTime;
+        //GetComponentInChildren<Rigidbody2D>().velocity = new Vector2(accelerationH, accelerationV);
         transform.Translate(Vector3.right * hdistance);
         transform.Translate(Vector3.up * vdistance);
-        //sprite.transform.position = transform.position;
 
         if (v != 0 || h != 0)
         {
@@ -243,8 +247,14 @@ public class CharacterScript : MonoBehaviour
         }
         if (oxygen <= 0)
         {
+            GenItems.generate = false;
             Cursor.visible = true;
-            Application.LoadLevel("ranking");
+            Destroy(GameObject.Find("Objects"));
+            finishInput = true;
+            submitRanking.SetActive(true);
+            theme.Stop();
+            gameover.Play();
+            return;
         }
 
         if (accelerationH > 0)

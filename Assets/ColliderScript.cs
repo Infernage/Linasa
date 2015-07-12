@@ -14,8 +14,6 @@ public class ColliderScript : MonoBehaviour
     public AudioClip[] audiosAlien;
     public AudioClip ouch;
     public AudioClip asteroidSound;
-    public GameObject submitRanking;
-
 
     // Use this for initialization
     void Start()
@@ -41,6 +39,8 @@ public class ColliderScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Obstacle")
         {
+            /*character.accelerationH = -collision.relativeVelocity.x;
+            character.accelerationV = -collision.relativeVelocity.y;*/
             AudioSource.PlayClipAtPoint(ouch, this.transform.position);
             if (collision.gameObject.name == "Satelite(Clone)")
             {
@@ -77,10 +77,9 @@ public class ColliderScript : MonoBehaviour
                     Cursor.visible = true;
                     Destroy(GameObject.Find("Objects"));
                     character.finishInput = true;
-                    submitRanking.SetActive(true);
-                    InputField field = submitRanking.GetComponentInChildren<InputField>();
-                    EventSystem.current.SetSelectedGameObject(field.gameObject, null);
-                    field.OnPointerClick(new PointerEventData(EventSystem.current));
+                    character.submitRanking.SetActive(true);
+                    character.theme.Stop();
+                    character.gameover.Play();
                 }
             }
         }
