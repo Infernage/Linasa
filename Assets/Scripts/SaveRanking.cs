@@ -22,9 +22,8 @@ public class SaveRanking : MonoBehaviour
 
     public void SaveData()
     {
-        GameObject canvas = GameObject.Find("CanvasTop10");
-        GameObject canvasPoints = GameObject.Find("Canvas");
-        points = canvasPoints.GetComponentInChildren<Text>();
+        GameObject canvas = GameObject.Find("Canvas");
+        points = canvas.GetComponentInChildren<Text>();
         InputName = canvas.GetComponentInChildren<InputField>();
         string name = InputName.text;
         string[] split = points.text.Split(' ');
@@ -37,5 +36,6 @@ public class SaveRanking : MonoBehaviour
             Array.Sort(saveRanking);
             File.WriteAllLines(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Ranking" + Path.DirectorySeparatorChar + "Ranking.txt", saveRanking);
         }
+        Application.LoadLevel("menu");
     }
 }

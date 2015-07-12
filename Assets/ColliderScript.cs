@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ColliderScript : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class ColliderScript : MonoBehaviour
     public AudioClip HitSat;
     public AudioClip[] audiosAlien;
     public AudioClip ouch;
+    public GameObject submitRanking;
 
 
     // Use this for initialization
@@ -57,7 +60,13 @@ public class ColliderScript : MonoBehaviour
                 health--;
                 if (health <= 0)
                 {
-                    Application.LoadLevel("ranking");
+                    Cursor.visible = true;
+                    Destroy(GameObject.Find("Objects"));
+                    character.finishInput = true;
+                    submitRanking.SetActive(true);
+                    InputField field = submitRanking.GetComponentInChildren<InputField>();
+                    EventSystem.current.SetSelectedGameObject(field.gameObject, null);
+                    field.OnPointerClick(new PointerEventData(EventSystem.current));
                 }
             }
         }

@@ -10,7 +10,7 @@ public class DestroyItem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(transform.position.x + " " + transform.position.y);
+        //Debug.Log(transform.position.x + " " + transform.position.y);
 	}
 
     void OnTriggerEnter2D(Collider2D col)

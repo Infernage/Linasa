@@ -36,6 +36,11 @@ public class CharacterScript : MonoBehaviour {
         set;
         get;
     }
+    public bool finishInput
+    {
+        get;
+        set;
+    }
     #endregion Propiedades
 
     public ParticleSystem particles;
@@ -44,6 +49,7 @@ public class CharacterScript : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        finishInput = false;
         AudioSource[] audios = this.gameObject.GetComponents<AudioSource>();
         foreach (AudioSource source in audios)
         {
@@ -69,7 +75,18 @@ public class CharacterScript : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.Escape))
         {
+            Cursor.visible = true;
             Application.LoadLevel("menu");
+            return;
+        }
+        else if (finishInput)
+        {
+            if (sprite.activeSelf)
+            {
+                accelerationH = accelerationV = 0;
+                particles.Stop();
+                sprite.SetActive(false);
+            }
             return;
         }
         float h = Input.GetAxis("Horizontal");

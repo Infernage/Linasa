@@ -36,7 +36,8 @@ public class GenItems : MonoBehaviour
         num = Random.Range(0, objs.Length);
         float x = Random.Range(0, 2) + transform.position.x;
         float y = Random.Range(0, 2) + transform.position.y;
-        Instantiate(objs[num], new Vector3(x, y, transform.position.z), Quaternion.identity);
+        GameObject item = Instantiate(objs[num], new Vector3(x, y, transform.position.z), Quaternion.identity) as GameObject;
+        item.transform.parent = GameObject.Find("Objects").transform;
         items++;
     }
 
