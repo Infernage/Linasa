@@ -27,13 +27,29 @@ public class LoadRanking : MonoBehaviour
 
     void LoadData()
     {
-        string[] ranking = File.ReadAllLines(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Assets" + Path.DirectorySeparatorChar + "Ranking" + Path.DirectorySeparatorChar + "Ranking.txt");
+        string[] ranking;
+        if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            + Path.DirectorySeparatorChar + "Linasa" + Path.DirectorySeparatorChar + "Ranking.txt"))
+        {
+            ranking = File.ReadAllLines(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                + Path.DirectorySeparatorChar + "Linasa" + Path.DirectorySeparatorChar + "Ranking.txt");
+        }
+        else
+        {
+            ranking = new string[0];
+        }
 
         List<KeyValuePair<int, string>> ordenada = new List<KeyValuePair<int, string>>();
         for (int i = 0; i < ranking.Length; i++)
         {
             string[] cut = ranking[i].Split('-');
             KeyValuePair<int, string> key = new KeyValuePair<int, string>(int.Parse(cut[1]), cut[0]);
+            ordenada.Add(key);
+        }
+
+        for (int i = ordenada.Count; i < 10; i++)
+        {
+            KeyValuePair<int, string> key = new KeyValuePair<int, string>(0, "AAAAAAAAAAAAAAA");
             ordenada.Add(key);
         }
 

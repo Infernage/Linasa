@@ -57,6 +57,7 @@ public class CharacterScript : MonoBehaviour
     public GameObject submitRanking;
     public AudioSource theme;
     public AudioSource gameover;
+    public GameObject menu;
 
     // Use this for initialization
     void Start()
@@ -100,7 +101,8 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             Cursor.visible = true;
-            Application.LoadLevel("menu");
+            menu.SetActive(true);
+            Time.timeScale = 0;
             return;
         }
         else if (finishInput)
@@ -305,5 +307,16 @@ public class CharacterScript : MonoBehaviour
 
     }
 
+    public void continueGame()
+    {
+        Cursor.visible = false;
+        menu.SetActive(false);
+        Time.timeScale = 1;
+    }
 
+    public void exit()
+    {
+        Time.timeScale = 1;
+        Application.LoadLevel("menu");
+    }
 }

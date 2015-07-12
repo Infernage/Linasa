@@ -112,12 +112,10 @@ public class ColliderScript : MonoBehaviour
             else if (collision.gameObject.name == "BolsaBasura(Clone)")
             {
                 AudioSource.PlayClipAtPoint(bolsa, this.transform.position);
-                Debug.Log("basurita");
             }
             else if (collision.gameObject.name == "Barril(Clone)")
             {
                 AudioSource.PlayClipAtPoint(barril, this.transform.position);
-                Debug.Log("barrilete");
             }
         }
         else if (collision.gameObject.tag == "Oxygen")
